@@ -1,7 +1,7 @@
 # 定时更新阿里云安全组
 
 ## 场景
-安全组中开放了的敏感端口（如：3306）仅允许指定的办公网宽带IP访问。宽带IP不是固定的，需要再其更新后，修改安全组的原地址。
+安全组中开放了的敏感端口（如：3306）仅允许指定的办公网宽带IP访问。宽带IP不是固定的，需要在其更新后，修改安全组的源地址。
 
 ## 用法
 
@@ -9,7 +9,7 @@
 
 * Python
 ``` python
-group = SecruityGroup('<accessKeyId>', '<accessSecret>', 'cn-hangzhou')
+group = SecruityGroup('<accessKeyId>', '<accessSecret>', '<region>')
 group.changeSourceCidr('<Security Group ID>', '<Prifex of rule description')
 ```
 

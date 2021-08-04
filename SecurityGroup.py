@@ -41,13 +41,14 @@ class SecruityGroup:
 
         return (data['Permissions']['Permission'])
 
-    def changeSourceCidr(self, groupId, descPrefix):
+    def changeSourceCidr(self, groupId, descPrefix, newCidr = None):
         """
         修改源地址
         """
-        newCidr = self.getCidr()
+        if newCidr is None:
+            newCidr = self.getCidr()
         print('new SourceCidrIp: ' + newCidr)
-        rules = group.getRules(groupId)
+        rules = self.getRules(groupId)
 
         targetRules = [x for x in rules if x['Description'].startswith(descPrefix)]
 
@@ -116,12 +117,11 @@ class SecruityGroup:
         if ('"Code"' in data):
                 raise Exception(str(response))
 
-    def getCidr(self):
-        response = requests.get('http://ip.cip.cc')
+    def getCidr(self, url = 'http://140.246.36.49:40080'):
+        response = requests.get(url)
         return response.text.replace('\n', '').replace('\r', '')
 
-
 if __name__ == '__main__':
-    group = SecruityGroup('<accessKeyId>', '<accessSecret>', 'cn-hangzhou')
-    group.changeSourceCidr('<Security Group ID>', '<Prifex of rule description')
+    group = SecruityGroup('<accessKeyId>', '<accessSecret>', '<region>')
+    group.changeSourceCidr('<group id>', '<comment>')
 
